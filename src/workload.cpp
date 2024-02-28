@@ -7,7 +7,7 @@ void to_json(nlohmann::json& j, const Workload& m) {
          {"type", m.getTypeString()},
          {"owner", m.owner},
          {"remaining_tasks", m.remainingTasks},
-         {"master_id", m.master_id},
+         {"master_id", 0},
          {"computing_offload", m.computingOffload},
          {
              "interarrival_type", {

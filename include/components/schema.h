@@ -43,13 +43,20 @@ private:
 class ComponentsIds
 {
 public:
+    unsigned getNewMachineId()
+    {
+        this->machineId += 2;
+        return this->machineId;
+    }
     unsigned getNewConnectableId()
     {
         return this->connectableId++;
     }
     unsigned getNewLinkId()
     {
-        return this->linkId++;
+        unsigned link_id = this->linkId;
+        this->linkId += 2;
+        return link_id;
     }
 
     std::pair<unsigned, std::string> getNewLinkBase()
@@ -66,7 +73,7 @@ public:
 
     std::pair<unsigned, std::string> getNewMachineBase()
     {
-        unsigned newMachineId = this->getNewConnectableId();
+        unsigned newMachineId = this->getNewMachineId();
         return std::pair(newMachineId,
                          "Machine" + std::to_string(newMachineId));
     }
@@ -87,7 +94,8 @@ public:
 
 private:
     unsigned connectableId = 0;
-    unsigned linkId        = 0;
+    unsigned linkId        = 1;
+    unsigned machineId = 0;
 };
 
 class Schema : public Connectable

@@ -33,6 +33,7 @@ void MachineConfiguration::setName(std::string_view const &newName)
 
 void to_json(json &j, const MachineConfiguration &m) {
     if (m.master) {
+
         j = json{
             {"scheduler", m.scheduler},
             {"slaves", m.slaves},

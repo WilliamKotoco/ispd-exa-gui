@@ -242,6 +242,7 @@ unsigned Schema::getMasterId()
 
 void to_json(json &j, const Schema &s)
 {
+    int ids_machine = 2;
     j["users"]     = json::array();
     j["workloads"] = json::array();
     j["services"]  = {{"machines", json::array()},
@@ -252,10 +253,20 @@ void to_json(json &j, const Schema &s)
         if (auto machine = dynamic_cast<Machine *>(i.second.get());
             machine != nullptr) {
             if (machine->conf->master) {
+
+
+                machine->setId(0); //master must have id 0
                 j["services"]["masters"].push_back(*machine);
             }
             else {
+                if(machine->getId() == 2)
+                {
+                    continue;
+                }
+                machine->setId(ids_machine);
+                ids_machine += 2;
                 j["services"]["machines"].push_back(*machine);
+
             }
         }
         else if (auto switchC = dynamic_cast<Switch *>(i.second.get());
@@ -269,6 +280,7 @@ void to_json(json &j, const Schema &s)
     }
 
     for (auto &i : s.links) {
+
         j["services"]["links"].push_back(*i.second.get());
     }
 }

@@ -26,7 +26,7 @@ DrawingTable::DrawingTable(QFrame *parent) : DrawingTable(new Schema(), parent)
 {
     mainContext.mainSchema = std::shared_ptr<Schema>(this->schema);
     int id = mainContext.mainSchema->allocateNewMachine();
-    auto machine = &mainContext.mainSchema->connectables[id];
+   // auto machine = &mainContext.mainSchema->connectables[id];
 
     //-------------------------------------------------------------------------
     // TEMPORARY
@@ -361,6 +361,8 @@ void DrawingTable::openUserWindowClicked()
 
 void DrawingTable::openSimulationWindowClicked()
 {
+
+
     /// temporary must be removed when simulation allows more than one workload
     this->mainContext.workloads.at(0).master_id = this->schema->getMasterId();
 
@@ -396,8 +398,8 @@ void DrawingTable::openSimulationWindowClicked()
 
     for (const auto &link : this->schema->links) {
         outStream << link.second->connections.begin->getId() << " ";
-        outStream << link.second->getId() << " ";
-        outStream << link.second->connections.end->getId() << "\n";
+        outStream << link.second->connections.end->getId() << " ";
+        outStream << link.second->getId() << "\n";
     }
 
     file.close();
